@@ -5,6 +5,8 @@
  */
 package com.xiaodevil.views;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,7 +14,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+
 import com.xiaodevil.contacts.R;
+import com.xiaodevil.database.DataHelper;
+import com.xiaodevil.models.User;
 
 public class AddNewContactsActivity extends Activity{
 	private EditText inputName;
@@ -22,6 +27,8 @@ public class AddNewContactsActivity extends Activity{
 	private String name;
 	private String phoneNumber;
 	private String qq;
+	private User user;
+	private ArrayList<String[]> phoneNumbers = new ArrayList<String[]>();
 	
 	private final static String TAG = "com.xiaodevil.views.AddNewContactsActivity";
 	@Override
@@ -29,6 +36,7 @@ public class AddNewContactsActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.add_new_contact);
 		Log.i(TAG,"AddNewContactsActivity");
+		user = new User();
 		setupViews();
 	}
 	
@@ -42,13 +50,13 @@ public class AddNewContactsActivity extends Activity{
 			
 			@Override
 			public void onClick(View v) {
-				name = inputName.getText().toString();
-				phoneNumber = inputPhoneNumber.getText().toString();
+				user.setUserName(inputName.getText().toString());
+				phoneNumbers.add(new String[]{inputPhoneNumber.getText().toString()});
+				user.setPhoneNumbers(phoneNumbers);
 				qq = inputQQ.getText().toString();
 				
-				if(name != null || phoneNumber != null || qq != null){
-					
-				}
+				DataHelper.getInstance().addContacts(getApplicationContext(), user);
+				
 				
 			}
 		});

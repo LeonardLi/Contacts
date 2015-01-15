@@ -7,14 +7,17 @@ package com.xiaodevil.views;
 
 
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,6 +27,8 @@ import com.xiaodevil.models.User;
 public class UserInfoActivity extends ActionBarActivity {
 	
 	private final static String TAG = "com.xiaodevil.views.UserInfoActivity";
+	private ArrayList<String> number = new ArrayList<String>();
+	private ListAdapter listAdapter;
 	
 	private TextView ContactName;
 	private ImageView Infobackground;
@@ -31,6 +36,7 @@ public class UserInfoActivity extends ActionBarActivity {
 	private Button msg;
 	private ListView UserInfo;
 	private User user;
+	private Intent intent;
 	private String[] color = {"#33cccc","#0066cc","#ffccff","#ffffcc"};
 	protected void onCreate(Bundle savedInstanceState ){
 		super.onCreate(savedInstanceState);
@@ -45,12 +51,15 @@ public class UserInfoActivity extends ActionBarActivity {
 		//dia = (Button)findViewById(R.id.dia);
 		//msg = (Button)findViewById(R.id.msg);
 		
-		Intent intent = this.getIntent();
+		number.add("1333333333");
+		number.add("1322222222");
+		number.add("1311111111");
+		number.add("1300000000");
+		intent = this.getIntent();
 
-		user = (User)intent.getSerializableExtra(MainActivity.SER_KEY);
-		if(user != null){
-			ContactName.setText(user.getUserName());
-		}
+		
+		
+		setupViews();
 //		msg.setOnClickListener(new OnClickListener() {
 //			
 //			@Override
@@ -79,5 +88,25 @@ public class UserInfoActivity extends ActionBarActivity {
 //		});
 		
 
+	}
+	
+	
+	
+	private void setupViews(){
+		ContactName = (TextView) findViewById(R.id.name);
+		Infobackground = (ImageView) findViewById(R.id.info_avatar_bg);
+		UserInfo = (ListView) findViewById(R.id.user_phone_number_list);
+		Random rdm = new Random(System.currentTimeMillis());
+		int index = Math.abs(rdm.nextInt())%4;
+		Infobackground.setBackgroundColor(android.graphics.Color.parseColor(color[index]));
+		
+		user = (User)intent.getSerializableExtra(MainActivity.SER_KEY);
+		if(user != null){
+			ContactName.setText(user.getUserName());
+		}
+		
+		listAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_expandable_list_item_1, number);
+		UserInfo.setAdapter(listAdapter);
+		
 	}
 }

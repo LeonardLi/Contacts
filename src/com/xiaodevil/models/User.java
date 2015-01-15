@@ -3,26 +3,40 @@
  * @author ydli
  *	
  */
+//package com.xiaodevil.models;
 package com.xiaodevil.models;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+//TYPE_MOBILE 
+//TYPE_HOME 
+//TYPE_WORK 
 
 public class User implements Serializable {
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	private static final long serialVersionUID = -2894121008151688346L;
 	private int id;
 	private String userName;
 	private String phoneNumber;
-	private Map<Integer,String> phoneNumbers;
-	
+	// private Map<Integer,String> phoneNumbers;
+	private ArrayList<String[]> phoneNumbers;
+
+	public ArrayList<String[]> getPhoneNumbers() {
+		return phoneNumbers;
+	}
+
+	public void setPhoneNumbers(ArrayList<String[]> phoneNumbers) {
+		this.phoneNumbers = phoneNumbers;
+	}
 
 	private String nickname;
 	private String sortKey;
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -44,7 +58,9 @@ public class User implements Serializable {
 		this.sortKey = sortKey;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -74,8 +90,6 @@ public class User implements Serializable {
 		return true;
 	}
 
-
-
 	/**
 	 * @return the phoneNumber
 	 */
@@ -84,19 +98,16 @@ public class User implements Serializable {
 	}
 
 	/**
-	 * @param phoneNumber the phoneNumber to set
+	 * @param phoneNumber
+	 *            the phoneNumber to set
 	 */
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 
+	public User() {
+		phoneNumbers = new ArrayList<String[]>();
 
-
-	
-	public User()
-	{
-		phoneNumbers = new HashMap<Integer, String>();
-	
 	}
 
 	public int getId() {
@@ -115,9 +126,6 @@ public class User implements Serializable {
 		this.userName = userName;
 	}
 
-
-
-
 	public String getNickname() {
 		return nickname;
 	}
@@ -125,16 +133,15 @@ public class User implements Serializable {
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
-	
+
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		String text = "";
 		text += "\nid = " + id;
 		text += "\nusername = " + userName;
 		text += "\nphoneNumber = " + phoneNumber;
 		text += "\nnickname = " + nickname;
-		
+
 		return text;
 	}
 }

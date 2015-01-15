@@ -18,6 +18,7 @@ import android.provider.ContactsContract;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.SearchView.OnQueryTextListener;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,7 +32,7 @@ import com.xiaodevil.models.User;
 import com.xiaodevil.utils.ContactAdapter;
 
 
-public class MainActivity extends ActionBarActivity implements SearchView.OnQueryTextListener{
+public class MainActivity extends ActionBarActivity {
 	private IndexableListView contactsListView;
 	private ContactAdapter adapter;
 	private List<User> users = new ArrayList<User>();
@@ -108,6 +109,21 @@ public class MainActivity extends ActionBarActivity implements SearchView.OnQuer
 		if (id == R.id.action_search) {
 			//Toast.makeText(getApplicationContext(), "action_about",Toast.LENGTH_SHORT).show();
 			searchview.setIconified(false);
+			searchview.setSubmitButtonEnabled(true);
+			searchview.setOnQueryTextListener(new OnQueryTextListener() {
+				
+				@Override
+				public boolean onQueryTextSubmit(String s) {
+					Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+					return false;
+				}
+				
+				@Override
+				public boolean onQueryTextChange(String s) {
+					
+					return false;
+				}
+			});
 			return true;
 		}
 		
@@ -178,15 +194,5 @@ public class MainActivity extends ActionBarActivity implements SearchView.OnQuer
     	
     }
     
-	@Override
- 	public boolean onQueryTextChange(String arg0) {
-		
-		return false;
-	}
-	@Override
-	public boolean onQueryTextSubmit(String s) {
-		//Toast.makeText(this, "text"+s, Toast.LENGTH_SHORT).show();
-		searchContacts(s);
-		return false;
-	}
+	
 }
