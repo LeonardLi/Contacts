@@ -31,7 +31,7 @@ public class UserInfoActivity extends ActionBarActivity {
 	private Button msg;
 	private ListView UserInfo;
 	private User user;
-	private String[] color = {"#00cc00","#0099ff","#00ffff","#ccccff","#cc0000","#ccff00"};
+	private String[] color = {"#33cccc","#0066cc","#ffccff","#ffffcc"};
 	protected void onCreate(Bundle savedInstanceState ){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.contacts_info);
@@ -39,7 +39,7 @@ public class UserInfoActivity extends ActionBarActivity {
 		ContactName = (TextView) findViewById(R.id.name);
 		Infobackground = (ImageView) findViewById(R.id.info_avatar_bg);
 		Random rdm = new Random(System.currentTimeMillis());
-		int index = Math.abs(rdm.nextInt())%6;
+		int index = Math.abs(rdm.nextInt())%4;
 		Infobackground.setBackgroundColor(android.graphics.Color.parseColor(color[index]));
 		
 		//dia = (Button)findViewById(R.id.dia);

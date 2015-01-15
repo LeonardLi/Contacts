@@ -44,8 +44,8 @@ public class ContactAdapter extends ArrayAdapter<User> implements SectionIndexer
 			e.printStackTrace();
 		}
 		
-		avatar.setText(user.getSortKey());
-		//avatar.setText(user.getUserName().subSequence(0,1));
+		//avatar.setText(user.getSortKey());
+		avatar.setText(user.getUserName().substring(0,1));
 		return layout;
 	}
 
