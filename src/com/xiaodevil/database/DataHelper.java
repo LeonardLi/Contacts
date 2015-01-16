@@ -81,25 +81,6 @@ public class DataHelper {
 			resolver.insert(uri, values);
 			values.clear();
 		}
-		// ArrayList<String[]> ph = user.getPhoneNumbers();
-		// String[][] test = (String[][]) user.getPhoneNumbers().toArray(
-		// new String[0][0]);
-		// if (test.length > 0) {
-		// for (int i = 0; i < test.length; i++)
-		// for (int j = 0; j < test[i].length; j++) {
-		// if (!test[i][j].equals("")) {
-		// values.put("raw_contact_id", contact_id);
-		// values.put(Data.MIMETYPE,
-		// "vnd.android.cursor.item/phone_v2");
-		// values.put("data2", i + 1 + "");
-		// values.put("data1", test[i][j]);
-		// Log.e(TAG, values.toString());
-		// resolver.insert(uri, values);
-		// values.clear();
-		// }
-		// }
-		// }
-
 	}
 
 	/**
@@ -130,39 +111,39 @@ public class DataHelper {
 		ArrayList<User> users = new ArrayList<>();
 		Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
 		Cursor cursor = context.getContentResolver().query(uri,
-				new String[] { "display_name", "sort_key", "data1" }, null,
+				new String[] { "display_name", "sort_key"
+			,ContactsContract.CommonDataKinds.Phone.NUMBER,ContactsContract.CommonDataKinds.Phone.DATA2}, null,
 				null, "sort_key");
 		if (cursor.moveToFirst()) {
 			do {
+				String pre_name =null; 
 				String name = cursor.getString(0);
 				String sortKey = getSortKey(cursor.getString(cursor
 						.getColumnIndex("sort_key")));
-				// String phoneNumber =
-				// cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+				String number =cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+				int type=(int)cursor.getLong(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DATA2));
 				User user = new User();
 				user.setUserName(name);
 				user.setSortKey(sortKey);
-				// user.setPhoneNumber(phoneNumber);
-				int id = findContactId(context, name);
-				Cursor phones = context.getContentResolver().query(
-						ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-						new String[] {
-								ContactsContract.CommonDataKinds.Phone.NUMBER,
-								ContactsContract.CommonDataKinds.Phone.DATA2 },
-						ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "="
-								+ id, null, null);
 				ArrayList<PhoneNumber> nums = new ArrayList<>();
-				while (phones.moveToNext()) {
-					PhoneNumber num = new PhoneNumber();
-					num.setPhoneNumber(phones.getString(phones
-							.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
-					num.setType((int) phones.getLong(phones
-							.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DATA2)));
-					nums.add(num);
-				}
-				phones.close();
-				user.setPhoneNumbers(nums);
-				users.add(user);
+					do{
+						PhoneNumber num = new PhoneNumber();
+						num.setPhoneNumber(number);
+						num.setType(type);
+						nums.add(num);
+						pre_name =name;
+						if(cursor.moveToNext()){
+							 name = cursor.getString(0);
+							 sortKey = getSortKey(cursor.getString(cursor
+									.getColumnIndex("sort_key")));
+							 number =cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+							 type=(int)cursor.getLong(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DATA2));
+						}
+						else break;
+					}while(pre_name.equals(name));
+					user.setPhoneNumbers(nums);
+					users.add(user);
+					cursor.moveToPrevious();
 			} while (cursor.moveToNext());
 			cursor.close();
 		}
