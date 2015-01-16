@@ -27,7 +27,6 @@ import com.xiaodevil.models.User;
 public class UserInfoActivity extends ActionBarActivity {
 	
 	private final static String TAG = "com.xiaodevil.views.UserInfoActivity";
-	private ArrayList<String> number = new ArrayList<String>();
 	private ListAdapter listAdapter;
 	
 	private TextView ContactName;
@@ -38,6 +37,7 @@ public class UserInfoActivity extends ActionBarActivity {
 	private User user;
 	private Intent intent;
 	private String[] color = {"#33cccc","#0066cc","#ffccff","#ffffcc"};
+	private ArrayList<String[]> phoneNumbers;
 	protected void onCreate(Bundle savedInstanceState ){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.contacts_info);
@@ -51,10 +51,6 @@ public class UserInfoActivity extends ActionBarActivity {
 		//dia = (Button)findViewById(R.id.dia);
 		//msg = (Button)findViewById(R.id.msg);
 		
-		number.add("1333333333");
-		number.add("1322222222");
-		number.add("1311111111");
-		number.add("1300000000");
 		intent = this.getIntent();
 
 		
@@ -105,8 +101,10 @@ public class UserInfoActivity extends ActionBarActivity {
 			ContactName.setText(user.getUserName());
 		}
 		
-		listAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_expandable_list_item_1, number);
-		UserInfo.setAdapter(listAdapter);
+		
+		
+		//listAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_expandable_list_item_1, phoneNumbers);
+		//UserInfo.setAdapter(listAdapter);
 		
 	}
 }

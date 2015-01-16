@@ -43,7 +43,6 @@ public class AddNewContactsActivity extends Activity{
 	private void setupViews(){
 		inputName = (EditText) findViewById(R.id.input_name);
 		inputPhoneNumber = (EditText) findViewById(R.id.input_phone_number);
-		inputQQ = (EditText) findViewById(R.id.input_qq);
 		confirmButton = (Button) findViewById(R.id.confirm_button);
 		
 		confirmButton.setOnClickListener(new OnClickListener() {
@@ -52,7 +51,7 @@ public class AddNewContactsActivity extends Activity{
 			public void onClick(View v) {
 				user.setUserName(inputName.getText().toString());
 				phoneNumbers.add(new String[]{inputPhoneNumber.getText().toString()});
-				user.setPhoneNumbers(phoneNumbers);
+				//user.setPhoneNumbers(phoneNumbers);
 				qq = inputQQ.getText().toString();
 				
 				DataHelper.getInstance().addContacts(getApplicationContext(), user);

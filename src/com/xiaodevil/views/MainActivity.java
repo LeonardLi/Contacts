@@ -152,7 +152,7 @@ public class MainActivity extends ActionBarActivity {
     			User user = new User();
     			user.setUserName(name);
     			user.setSortKey(sortKey);
-    			user.setPhoneNumber(phoneNumber);
+    			//user.setPhoneNumber(phoneNumber);
     			users.add(user);
     		}while(cursor.moveToNext());
     		startManagingCursor(cursor);
