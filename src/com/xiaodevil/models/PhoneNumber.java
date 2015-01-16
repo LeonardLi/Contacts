@@ -1,6 +1,12 @@
 package com.xiaodevil.models;
 
-public class PhoneNumber {
+import java.io.Serializable;
+
+public class PhoneNumber implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1799042283281468302L;
 	private String phoneNumber;
 	private int Type;
 	public String getPhoneNumber() {
