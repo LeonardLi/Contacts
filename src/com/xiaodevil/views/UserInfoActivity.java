@@ -14,7 +14,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
@@ -22,7 +21,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.xiaodevil.contacts.R;
+import com.xiaodevil.models.PhoneNumber;
 import com.xiaodevil.models.User;
+import com.xiaodevil.utils.UserInfoAdapter;
 
 public class UserInfoActivity extends ActionBarActivity {
 	
@@ -36,8 +37,8 @@ public class UserInfoActivity extends ActionBarActivity {
 	private ListView UserInfo;
 	private User user;
 	private Intent intent;
-	private String[] color = {"#33cccc","#0066cc","#ffccff","#ffffcc"};
-	private ArrayList<String[]> phoneNumbers;
+	private String[] color = {"#eae8ff","#d8d5d8","#adacb5","#2d3142","#b0d7ff"};
+	
 	protected void onCreate(Bundle savedInstanceState ){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.contacts_info);
@@ -45,7 +46,7 @@ public class UserInfoActivity extends ActionBarActivity {
 		ContactName = (TextView) findViewById(R.id.name);
 		Infobackground = (ImageView) findViewById(R.id.info_avatar_bg);
 		Random rdm = new Random(System.currentTimeMillis());
-		int index = Math.abs(rdm.nextInt())%4;
+		int index = Math.abs(rdm.nextInt())%5;
 		Infobackground.setBackgroundColor(android.graphics.Color.parseColor(color[index]));
 		
 		//dia = (Button)findViewById(R.id.dia);
@@ -103,7 +104,8 @@ public class UserInfoActivity extends ActionBarActivity {
 		
 		
 		
-		//listAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_expandable_list_item_1, phoneNumbers);
+	//	listAdapter = new UserInfoAdapter(this, R.layout.userinfo_item, user.getPhoneNumbers());
+		
 		//UserInfo.setAdapter(listAdapter);
 		
 	}

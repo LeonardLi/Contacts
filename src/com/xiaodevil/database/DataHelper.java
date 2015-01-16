@@ -65,7 +65,6 @@ public class DataHelper {
 		Uri uri = Uri.parse("content://com.android.contacts/raw_contacts");
 		ContentResolver resolver = context.getContentResolver();
 		ContentValues values = new ContentValues();
-		Log.e("into", user.getPhoneNumbers().size() + "");
 		long contact_id = ContentUris.parseId(resolver.insert(uri, values));
 		uri = Uri.parse("content://com.android.contacts/data");
 		values.put("raw_contact_id", contact_id);
