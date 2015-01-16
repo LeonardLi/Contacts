@@ -7,7 +7,7 @@
 package com.xiaodevil.models;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.ArrayList;
 //TYPE_MOBILE 
 //TYPE_HOME 
 //TYPE_WORK 
@@ -22,14 +22,7 @@ public class User implements Serializable {
 	private static final long serialVersionUID = -2894121008151688346L;
 	private int id;
 	private String userName;
-
-	private List<PhoneNumber> phoneNumbers;
-	// private Map<Integer,String> phoneNumbers;
-
-	
-
-	
-
+	private ArrayList<PhoneNumber> phoneNumbers;
 	private String nickname;
 	private String sortKey;
 
@@ -131,13 +124,15 @@ public class User implements Serializable {
 				+ sortKey + "]";
 	}
 
-	public List<PhoneNumber> getPhoneNumbers() {
+	public ArrayList<PhoneNumber> getPhoneNumbers() {
 		return phoneNumbers;
 	}
 
-	public void setPhoneNumbers(List<PhoneNumber> phoneNumbers) {
+	public void setPhoneNumbers(ArrayList<PhoneNumber> phoneNumbers) {
 		this.phoneNumbers = phoneNumbers;
 	}
+
+
 
 
 }

@@ -6,8 +6,10 @@
 package com.xiaodevil.views;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +19,7 @@ import android.widget.EditText;
 
 import com.xiaodevil.contacts.R;
 import com.xiaodevil.database.DataHelper;
+import com.xiaodevil.models.PhoneNumber;
 import com.xiaodevil.models.User;
 
 public class AddNewContactsActivity extends Activity{
@@ -49,13 +52,24 @@ public class AddNewContactsActivity extends Activity{
 			
 			@Override
 			public void onClick(View v) {
-				user.setUserName(inputName.getText().toString());
-				phoneNumbers.add(new String[]{inputPhoneNumber.getText().toString()});
+				user.setUserName(inputName.getText().toString());	
+				ArrayList<PhoneNumber> list =new ArrayList<>();
+				PhoneNumber pho =new PhoneNumber();
+				pho.setPhoneNumber(inputPhoneNumber.getText().toString());
+				pho.setType(1);
+				list.add(pho);
+				user.setPhoneNumbers(list);
+				
+				Log.e("jialin1",list.size()+"");
+				Log.e("jialin2", user.getPhoneNumbers().size()+"");
+				//phoneNumbers.add(new String[]{inputPhoneNumber.getText().toString()});
 				//user.setPhoneNumbers(phoneNumbers);
-				qq = inputQQ.getText().toString();
+				//qq = inputQQ.getText().toString();
 				
 				DataHelper.getInstance().addContacts(getApplicationContext(), user);
-				
+				Intent intent = new Intent();
+				intent.setClass(AddNewContactsActivity.this, MainActivity.class);
+				startActivity(intent);
 				
 			}
 		});

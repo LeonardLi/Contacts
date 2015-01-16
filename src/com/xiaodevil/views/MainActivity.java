@@ -28,6 +28,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
 import com.xiaodevil.contacts.R;
+import com.xiaodevil.database.DataHelper;
 import com.xiaodevil.models.User;
 import com.xiaodevil.utils.ContactAdapter;
 
@@ -35,7 +36,7 @@ import com.xiaodevil.utils.ContactAdapter;
 public class MainActivity extends ActionBarActivity {
 	private IndexableListView contactsListView;
 	private ContactAdapter adapter;
-	private List<User> users = new ArrayList<User>();
+	private List<User> users;
 	private SearchView searchview;
 
 	
@@ -136,33 +137,36 @@ public class MainActivity extends ActionBarActivity {
      */
     public void setupViews(){
     	contactsListView = (IndexableListView) findViewById(R.id.contancts_list);  	
-    	adapter = new ContactAdapter(this, R.layout.contact_item, users);
     	
-    	Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
-    	cursor = getContentResolver().query(uri, 
-    			new String[]{"display_name","sort_key","data1"}, 
-    			null, 
-    			null, 
-    			"sort_key");    	
-    	if(cursor.moveToFirst()){
-    		do{
-    			String name = cursor.getString(0);
-    			String sortKey = getSortKey(cursor.getString(cursor.getColumnIndex("sort_key")));
-    			String phoneNumber = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-    			User user = new User();
-    			user.setUserName(name);
-    			user.setSortKey(sortKey);
-    			//user.setPhoneNumber(phoneNumber);
-    			users.add(user);
-    		}while(cursor.moveToNext());
-    		startManagingCursor(cursor);
-
-
-    		if(users.size() > 0){
-    			setupContactsListView();
-    		}
-    		
-    	}
+    	
+//    	Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+//    	cursor = getContentResolver().query(uri, 
+//    			new String[]{"display_name","sort_key","data1"}, 
+//    			null, 
+//    			null, 
+//    			"sort_key");    	
+//    	if(cursor.moveToFirst()){
+//    		do{
+//    			String name = cursor.getString(0);
+//    			String sortKey = getSortKey(cursor.getString(cursor.getColumnIndex("sort_key")));
+//    			String phoneNumber = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+//    			User user = new User();
+//    			user.setUserName(name);
+//    			user.setSortKey(sortKey);
+//    			//user.setPhoneNumber(phoneNumber);
+//    			users.add(user);
+//    		}while(cursor.moveToNext());
+//    		startManagingCursor(cursor);
+//
+//
+//
+//    		
+//    	}
+    	users = DataHelper.getInstance().queryContact(getApplicationContext());
+    	adapter = new ContactAdapter(this, R.layout.contact_item, users);
+		if(users.size() > 0){
+			setupContactsListView();
+		}
     }
 
     /**
