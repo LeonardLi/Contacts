@@ -5,8 +5,6 @@
  */
 package com.xiaodevil.views;
 
-import java.util.Random;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -41,6 +39,7 @@ public class UserInfoActivity extends ActionBarActivity {
 	private CircleImageView CircleAvatar;
 	private User user;
 	private Intent intent;
+	public final static String SER_KEY = "com.xiaode.user";
 	private final String CONFIRM_MSG = "确认删除么？";
 	private final String CONFIRM_MSG_YES = "是";
 	private final String CONFIRM_MSG_NO = "否";
@@ -54,7 +53,7 @@ public class UserInfoActivity extends ActionBarActivity {
 		setContentView(R.layout.contacts_info);
 		Log.i(TAG, "UserInfoActivity start");
 		ContactName = (TextView) findViewById(R.id.name);
-		Infobackground = (ImageView) findViewById(R.id.info_avatar_bg);
+		
 		CircleAvatar = (CircleImageView) findViewById(R.id.circleImageView1);
 
 		intent = this.getIntent();
@@ -107,10 +106,6 @@ public class UserInfoActivity extends ActionBarActivity {
 		ContactName = (TextView) findViewById(R.id.name);
 		Infobackground = (ImageView) findViewById(R.id.info_avatar_bg);
 		UserInfo = (ListView) findViewById(R.id.user_phone_number_list);
-		Random rdm = new Random(System.currentTimeMillis());
-		int index = Math.abs(rdm.nextInt()) % 4;
-		Infobackground.setBackgroundColor(android.graphics.Color
-				.parseColor(color[index]));
 
 		user = (User) intent.getSerializableExtra(MainActivity.SER_KEY);
 		if (user != null) {
@@ -126,7 +121,12 @@ public class UserInfoActivity extends ActionBarActivity {
 	}
 
 	private boolean modifyContacts() {
-		return false;
+		Bundle mBundle = new Bundle();
+		mBundle.putSerializable(SER_KEY, user);
+		intent.putExtras(mBundle);
+		intent.setClass(UserInfoActivity.this, ModifyContactActivity.class);
+		startActivity(intent);
+		return true;
 	}
 
 	private boolean deleteContacts() {

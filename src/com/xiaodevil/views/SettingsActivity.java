@@ -1,6 +1,7 @@
 package com.xiaodevil.views;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -18,6 +19,9 @@ public class SettingsActivity extends ActionBarActivity{
 	private RadioGroup radioGroup=null;
 	private RadioButton letterButton=null;
 	private RadioButton hanziButton=null;
+	private RadioGroup radioGroup2=null;
+	private RadioButton yesrButton=null;
+	private RadioButton noButton=null;
 	public static final  String KEY_SETTINGS = "settings";
 	public static final  String KEY_READTYPE = "readType";
 	public static final  String KEY_LETTER = "letter";
@@ -63,6 +67,9 @@ public class SettingsActivity extends ActionBarActivity{
 		
 	
 	}
+	
+
+	
 	
 	
 }

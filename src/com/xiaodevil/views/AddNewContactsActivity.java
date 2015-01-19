@@ -6,35 +6,37 @@
 package com.xiaodevil.views;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.xiaodevil.contacts.R;
 import com.xiaodevil.database.DataHelper;
 import com.xiaodevil.models.PhoneNumber;
 import com.xiaodevil.models.User;
+import com.xiaodevil.utils.PhoneNumberAdapter;
 
 public class AddNewContactsActivity extends ActionBarActivity{
 	private EditText inputName;
-	private EditText inputPhoneNumber;
-	private EditText inputQQ;
-	private Button confirmButton;
-	private String name;
-	private String phoneNumber;
-	private String qq;
 	private User user;
-	private ArrayList<String[]> phoneNumbers = new ArrayList<String[]>();
+	private List<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
+	private ArrayList<PhoneNumber> newPhoneNumbers = new ArrayList<PhoneNumber>();
+	private static ListView phoneNumberList;
+	private PhoneNumberAdapter mAdapter;
 	private final String ADD_SUCCEED = "已添加";
-	private final String Add_FAILED ="添加失败";
-	
+	private final String ADD_FAILED ="添加失败";
+	public static final String[] PHONE_TYPE = {"家庭","手机","工作"};
 	private final static String TAG = "com.xiaodevil.views.AddNewContactsActivity";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,40 +44,70 @@ public class AddNewContactsActivity extends ActionBarActivity{
 		setContentView(R.layout.add_new_contact);
 		Log.i(TAG,"AddNewContactsActivity");
 		user = new User();
+		PhoneNumber mPhone = new PhoneNumber();
+		phoneNumbers.add(mPhone);
+		mAdapter = new PhoneNumberAdapter(this, R.layout.phone_number_item, phoneNumbers);
+		
 		setupViews();
 	}
 	
+	@SuppressLint("NewApi")
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu){
+		getMenuInflater().inflate(R.menu.add_contact_menu, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item){
+		int id = item.getItemId();
+		if(id == R.id.action_confirm){
+			writeData();
+			
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
 	private void setupViews(){
 		inputName = (EditText) findViewById(R.id.input_name);
-		inputPhoneNumber = (EditText) findViewById(R.id.input_phone_number);
-		confirmButton = (Button) findViewById(R.id.confirm_button);
+		phoneNumberList = (ListView) findViewById(R.id.phone_number_list);
+		phoneNumberList.setAdapter(mAdapter);
+		resetListViewHeight();
 		
-		confirmButton.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				user.setUserName(inputName.getText().toString());	
-				ArrayList<PhoneNumber> list =new ArrayList<>();
-				PhoneNumber pho =new PhoneNumber();
-				pho.setPhoneNumber(inputPhoneNumber.getText().toString());
-				pho.setType(1);
-				list.add(pho);
-				user.setPhoneNumbers(list);
-				//user.setEmail("915966");
-				//user.setTeam("univ");
-				//phoneNumbers.add(new String[]{inputPhoneNumber.getText().toString()});
-				//user.setPhoneNumbers(phoneNumbers);
-				//qq = inputQQ.getText().toString();
-				
-				DataHelper.getInstance().addContacts(getApplicationContext(), user);
-				Intent intent = new Intent();
-				intent.setClass(AddNewContactsActivity.this, MainActivity.class);
-				Toast.makeText(getApplicationContext(), ADD_SUCCEED, Toast.LENGTH_SHORT).show();
-				startActivity(intent);
-				
-			}
-		});
 	}
 	
+	private void writeData(){
+
+		newPhoneNumbers.addAll( mAdapter.getAllItem());
+		user.setPhoneNumbers(newPhoneNumbers);
+		user.setUserName(inputName.getText().toString());
+		if(user.getUserName().equals("")){
+			Toast.makeText(getApplicationContext(), "请输入姓名", Toast.LENGTH_SHORT).show();
+		}else{
+		DataHelper.getInstance().addContacts(getApplicationContext(), user);
+		Intent intent = new Intent();
+		intent.setClass(AddNewContactsActivity.this, MainActivity.class);
+		Toast.makeText(getApplicationContext(), ADD_SUCCEED, Toast.LENGTH_SHORT).show();
+		startActivity(intent);
+		}
+		
+	}
+	
+	public static void resetListViewHeight(){
+		PhoneNumberAdapter adapter = (PhoneNumberAdapter)phoneNumberList.getAdapter();
+		if(adapter == null){
+			return;
+		}
+		int totalHeight = 0;
+		for(int i = 0; i < adapter.getCount(); i++){
+			View listItem = adapter.getView(i, null, phoneNumberList);
+			listItem.measure(0, 0);
+			totalHeight += listItem.getMeasuredHeight();
+		}
+		
+		ViewGroup.LayoutParams params = phoneNumberList.getLayoutParams();
+		params.height = totalHeight + (phoneNumberList.getDividerHeight()*(adapter.getCount() - 1));
+		phoneNumberList.setLayoutParams(params);
+	}
 	
 }
