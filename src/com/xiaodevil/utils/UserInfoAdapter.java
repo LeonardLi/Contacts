@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.xiaodevil.contacts.R;
 import com.xiaodevil.models.PhoneNumber;
+import com.xiaodevil.views.AddNewContactsActivity;
 
 public class UserInfoAdapter extends ArrayAdapter<PhoneNumber>{
 	private int resourceId;
@@ -40,21 +41,16 @@ public class UserInfoAdapter extends ArrayAdapter<PhoneNumber>{
 		if(convertView == null ){
 			layout = (LinearLayout) LayoutInflater.from(getContext()).inflate(
 					resourceId, null);
-			holder = new buttonViewHolder();
-			holder.msgButton = (ImageButton)layout.findViewById(R.id.msg);
-			holder.number = (TextView)layout.findViewById(R.id.user_phone_number);
-			holder.type = (TextView)layout.findViewById(R.id.user_phone_number_type);
 		}else{
-			layout = (LinearLayout)convertView;
-			holder = new buttonViewHolder();
-			holder.msgButton = (ImageButton)layout.findViewById(R.id.msg);
-			holder.number = (TextView)layout.findViewById(R.id.user_phone_number);
-			holder.type = (TextView)layout.findViewById(R.id.user_phone_number_type);
-			
+			layout = (LinearLayout)convertView;	
 		}
+		holder = new buttonViewHolder();
+		holder.msgButton = (ImageButton)layout.findViewById(R.id.msg);
+		holder.number = (TextView)layout.findViewById(R.id.user_phone_number);
+		holder.type = (TextView)layout.findViewById(R.id.user_phone_number_type);
 		
 		holder.number.setText(number.getPhoneNumber());
-		holder.type.setText(number.getType()+"");
+		holder.type.setText(AddNewContactsActivity.PHONE_TYPE[number.getType()-1]);
 		holder.msgButton.setOnClickListener(new msgButtonListener(position, parent.getContext()));
 		
 		return layout;
@@ -70,9 +66,7 @@ public class UserInfoAdapter extends ArrayAdapter<PhoneNumber>{
 		public void onClick(View v) {
 			int vid = v.getId();
 			if(vid == holder.msgButton.getId()){
-				Toast.makeText(getContext(), "text", Toast.LENGTH_SHORT).show();
 				Intent intent = new Intent(Intent.ACTION_SENDTO,Uri.parse("smsto:"+number.getPhoneNumber()));
-				intent.putExtra("sms_body","绍林好美");
 				context.startActivity(intent);
 			}
 			

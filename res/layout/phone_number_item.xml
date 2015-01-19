@@ -1,0 +1,34 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"  
+        android:layout_height="wrap_content" 
+        android:layout_marginTop="40dp"
+        android:orientation="horizontal"
+        android:descendantFocusability="beforeDescendants">         
+    <EditText
+        android:id="@+id/input_phone_number"
+        android:layout_width="200dip"
+        android:drawableLeft="@drawable/ic_call_black_48dp"
+        android:drawablePadding="5dp"
+        android:layout_height="wrap_content"
+		android:paddingTop="1dip"  
+		android:layout_marginLeft="5dp"
+		android:paddingBottom="1dip"  
+        android:inputType="phone"
+        android:hint="电话号码"/>
+
+    <Spinner
+        android:id="@+id/spinner_number_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="1dp"
+        android:entries="@array/number_type" />
+    <ImageButton
+	    android:id="@+id/new_phone_number"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:background="@drawable/ic_add_circle_black_48dp"
+	    android:contentDescription="@string/app_name"
+	    android:layout_gravity="center_horizontal"
+	    android:focusable="false"/>   
+ 
+</LinearLayout>

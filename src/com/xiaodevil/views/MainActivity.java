@@ -16,14 +16,12 @@ import android.support.v4.view.MenuItemCompat.OnActionExpandListener;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SearchView.OnQueryTextListener;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
-
 
 import com.xiaodevil.contacts.R;
 import com.xiaodevil.database.DataHelper;
@@ -74,9 +72,11 @@ public class MainActivity extends ActionBarActivity {
 				startActivity(intent);
 			}
 		});
-        
     }
     
+    /**
+     * 菜单按钮点击回掉函数
+     */
     @SuppressLint("NewApi")
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -85,8 +85,12 @@ public class MainActivity extends ActionBarActivity {
     	MenuItem searchItem = menu.findItem(R.id.action_search);
     	searchview = (SearchView)MenuItemCompat.getActionView(searchItem);
 		return super.onCreateOptionsMenu(menu);
+		
 	}
-
+    
+    /**
+     * 菜单Item点击处理回掉函数
+     */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
@@ -106,7 +110,7 @@ public class MainActivity extends ActionBarActivity {
 			
 		}
 		if (id == R.id.action_about) {
-			Toast.makeText(getApplicationContext(), "action_about",Toast.LENGTH_SHORT).show();
+
 			return true;
 		}
 		if (id == R.id.action_search) {
@@ -147,15 +151,25 @@ public class MainActivity extends ActionBarActivity {
 		return super.onOptionsItemSelected(item);
 	}
 	
-    @Override
+	@Override
+	protected void onResume(){
+		adapter.notifyDataSetChanged();
+		super.onResume();
+	}
+	
+	/**
+	 *重写返回键按钮响应回掉函数 
+	 */
+	@Override
 	public void onBackPressed(){
     	Intent intent = new Intent();
     	intent.setAction(Intent.ACTION_MAIN);
     	intent.addCategory(Intent.CATEGORY_HOME);
     	startActivity(intent);
     } 
+    
     /**
-     * 
+     *界面元素初始化 
      * 
      */
     private void setupViews(){
@@ -171,24 +185,19 @@ public class MainActivity extends ActionBarActivity {
     }
 
     /**
-     * 
+     * Listview初始化
      * 
      */
     private void setupContactsListView(){    	
     	contactsListView.setAdapter(adapter);
     	contactsListView.setFastScrollEnabled(true); 	
     }
+
+
+     
     /**
-     * 
-     *
-     *@param sortKeyString
-     *@return
-     *
+     *初始化设置，包括初始化头像和背景色     
      */
-
-
-
-    
 	private  void initPreferences(){	
         preferences = getSharedPreferences("settings",MODE_PRIVATE);
         editor=preferences.edit();

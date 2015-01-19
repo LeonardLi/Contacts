@@ -91,13 +91,13 @@ public class DataHelper {
 		Random rdm = new Random(System.currentTimeMillis());
 		int index = Math.abs(rdm.nextInt())%5;
 		int index2 = Math.abs(rdm.nextInt())%5;
-		user.setBgColor(UserInfoActivity.color[index]);
-		user.setAvatarId(UserInfoActivity.avatar[index2]);
 		for (int i = 0; i < user.getPhoneNumbers().size(); i++) {
 			values.put("raw_contact_id", contact_id);
 			values.put(Data.MIMETYPE, "vnd.android.cursor.item/phone_v2");
 			values.put("data2", user.getPhoneNumbers().get(i).getType());
 			values.put("data1", user.getPhoneNumbers().get(i).getPhoneNumber());
+			values.put("data14",UserInfoActivity.color[index] );
+			values.put("data15",UserInfoActivity.avatar[index2] );
 			resolver.insert(uri, values);
 			values.clear();
 		}
@@ -163,33 +163,33 @@ public class DataHelper {
 				int ava = cursor
 						.getInt(cursor
 								.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DATA15));
-				Cursor cur = context.getContentResolver().query(
-						Uri.parse("content://com.android.contacts/data"),
-						new String[] { Data.DATA1 },
-						"mimetype=? and raw_contact_id=?",
-						new String[] { "vnd.android.cursor.item/email_v2",
-								contactID + "" }, null);
-				if (cur.moveToFirst()) {
-					email = cur.getString(0);
-				}
-				cur.close();
-				cur = context.getContentResolver().query(
-						Uri.parse("content://com.android.contacts/data"),
-						new String[] { Data.DATA1 },
-						"mimetype=? and raw_contact_id=?",
-						new String[] { "vnd.android.cursor.item/organization",
-								contactID + "" }, null);
-				if (cur.moveToFirst()) {
-					team = cur.getString(0);
-				}
-				cur.close();
+//				Cursor cur = context.getContentResolver().query(
+//						Uri.parse("content://com.android.contacts/data"),
+//						new String[] { Data.DATA1 },
+//						"mimetype=? and raw_contact_id=?",
+//						new String[] { "vnd.android.cursor.item/email_v2",
+//								contactID + "" }, null);
+//				if (cur.moveToFirst()) {
+//					email = cur.getString(0);
+//				}
+//				cur.close();
+//				cur = context.getContentResolver().query(
+//						Uri.parse("content://com.android.contacts/data"),
+//						new String[] { Data.DATA1 },
+//						"mimetype=? and raw_contact_id=?",
+//						new String[] { "vnd.android.cursor.item/organization",
+//								contactID + "" }, null);
+//				if (cur.moveToFirst()) {
+//					team = cur.getString(0);
+//				}
+//				cur.close();
 				User user = new User();
-				if(email != null){
-					user.setEmail(email);
-				}
-				if(team != null ){
-					user.setTeam(team);
-				}
+//				if(email != null){
+//					user.setEmail(email);
+//				}
+//				if(team != null ){
+//					user.setTeam(team);
+//				}
 				user.setUserName(name);
 				user.setSortKey(sortKey);
 				user.setBgColor(col);

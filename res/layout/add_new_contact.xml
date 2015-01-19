@@ -1,83 +1,42 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+<LinearLayout 
+ 
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
 <LinearLayout 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-       
-     
 
- <LinearLayout 
-        android:layout_width="match_parent"  
-        android:layout_height="wrap_content" 
-        android:orientation="horizontal"> 
-    
-<ImageButton
-    android:id="@+id/avatar"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@drawable/ic_person_grey600_48dp"
-    android:padding="15dp"
-    android:layout_marginLeft="5dp"
-    android:contentDescription="@string/app_name"/>
-
-    <EditText
+        
+<EditText
         android:id="@+id/input_name"
         android:layout_width="250dip"
-        android:inputType="text"
-        android:layout_marginLeft="10dp"
-        android:hint="姓名"
-        android:layout_height="60dp"      
-        android:background="@null"  
-        android:textSize="16sp"/>
-
-</LinearLayout>
-<LinearLayout 
-        android:layout_width="match_parent"  
-        android:layout_height="wrap_content" 
-        android:gravity="center"
-        android:layout_marginTop="40dp"
-        android:orientation="horizontal">         
-    <EditText
-        android:id="@+id/input_phone_number"
-        android:layout_width="250dip"
-        android:drawableLeft="@drawable/ic_call_black_48dp"
+        android:drawableLeft="@drawable/ic_person_black_hdpi_48dp"
         android:drawablePadding="5dp"
         android:layout_height="wrap_content"
 		android:paddingTop="1dip"  
 		android:layout_marginLeft="5dp"
 		android:paddingBottom="1dip"  
-        android:inputType="phone"
-        android:hint="电话号码"/>
-    
-    <Spinner   
-        android:id="@+id/spinnerNumberType"  
-        android:layout_width="wrap_content"  
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="1dp"
-		android:layout_gravity="center"
-        android:entries="@array/number_type"/> 
+        android:inputType="text"
+        android:hint="姓名"/>
         
-    <ImageButton
-    android:id="@+id/newphonenumber"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:background="@drawable/ic_add_circle_black_48dp"
-    android:padding="3dp"
-    android:layout_marginLeft="1dp"
-    android:contentDescription="@string/app_name"/>
-</LinearLayout>
+<ListView
+    android:id="@+id/phone_number_list"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"/>
 
- <LinearLayout 
+<LinearLayout 
         android:layout_width="match_parent"  
         android:layout_height="wrap_content" 
         android:layout_marginTop="10dp"
-        android:orientation="horizontal"> 
-        
+        android:orientation="horizontal">         
          <EditText
         android:id="@+id/input_email"
         android:layout_width="370dip"
@@ -89,7 +48,6 @@
 		android:paddingBottom="1dip"  
         android:inputType="text"
         android:hint="E-mail"/>
-
 </LinearLayout>
 
 <LinearLayout 
@@ -98,7 +56,7 @@
         android:layout_marginTop="10dp"
         android:orientation="horizontal"> 
         
-         <EditText
+	<EditText
         android:id="@+id/input_team"
         android:layout_width="370dip"
         android:layout_marginLeft="5dp"
@@ -112,19 +70,8 @@
 
 </LinearLayout> 
  
-
-
 </LinearLayout>
 
 
-         <Button
-    android:id="@+id/confirm_button"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="添加"
-    android:textColor="#F3FCF0"
-    android:background="#64A857"
-    android:layout_alignParentRight="true"
-    android:layout_alignParentBottom="true"/>
-
-</RelativeLayout>
+</LinearLayout>
+</ScrollView>
