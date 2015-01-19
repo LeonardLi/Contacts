@@ -21,6 +21,8 @@ public class User implements Serializable {
 	 */
 	private static final long serialVersionUID = -2894121008151688346L;
 	private int id;
+	private int avatarId;
+	private String bgColor;
 	private String userName;
 	private ArrayList<PhoneNumber> phoneNumbers;
 	private String nickname;
@@ -28,6 +30,22 @@ public class User implements Serializable {
 
 	
 	
+	public int getAvatarId() {
+		return avatarId;
+	}
+
+	public void setAvatarId(int avatarId) {
+		this.avatarId = avatarId;
+	}
+
+	public String getBgColor() {
+		return bgColor;
+	}
+
+	public void setBgColor(String bgColor) {
+		this.bgColor = bgColor;
+	}
+
 	public String getSortKey() {
 		return sortKey;
 	}

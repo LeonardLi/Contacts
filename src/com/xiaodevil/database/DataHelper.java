@@ -4,6 +4,7 @@
 package com.xiaodevil.database;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -13,14 +14,14 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Data;
-import android.util.Log;
 
 import com.xiaodevil.models.PhoneNumber;
 import com.xiaodevil.models.User;
 
 public class DataHelper {
 	private static final String TAG = "com.example.test.DataHelper";
-
+	private String[] color = {"#3d315b","#444b6e","#708b75","#9ab875","#b0d7ff","#ec6623"};
+	private int[] avatar ={1,2,3,4,5};
 	// public static final int TYPE_HOME = 1;
 	// public static final int TYPE_MOBILE = 2;
 	// public static final int TYPE_WORK = 3;
@@ -112,7 +113,8 @@ public class DataHelper {
 		Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
 		Cursor cursor = context.getContentResolver().query(uri,
 				new String[] { "display_name", "sort_key"
-			,ContactsContract.CommonDataKinds.Phone.NUMBER,ContactsContract.CommonDataKinds.Phone.DATA2}, null,
+			,ContactsContract.CommonDataKinds.Phone.NUMBER,ContactsContract.CommonDataKinds.Phone.DATA2,
+			ContactsContract.CommonDataKinds.Phone.DATA14,ContactsContract.CommonDataKinds.Phone.DATA15,}, null,
 				null, "sort_key");
 		if (cursor.moveToFirst()) {
 			do {
@@ -121,10 +123,17 @@ public class DataHelper {
 				String sortKey = getSortKey(cursor.getString(cursor
 						.getColumnIndex("sort_key")));
 				String number =cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-				int type=(int)cursor.getLong(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DATA2));
+				int type = cursor.getInt(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DATA2));
+				String col = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DATA14));
+				int ava = cursor.getInt(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DATA15));	
+				//Log.e("name:",name);
+				//Log.e("color2:",col);
+				//Log.e("avatar2:",ava+"");
 				User user = new User();
 				user.setUserName(name);
 				user.setSortKey(sortKey);
+				user.setBgColor(col);
+				user.setAvatarId(ava);
 				ArrayList<PhoneNumber> nums = new ArrayList<>();
 					do{
 						PhoneNumber num = new PhoneNumber();
@@ -216,6 +225,34 @@ public class DataHelper {
  * @param sortKeyString
  * @return
  */
+	public void setAvatar(Context context)
+	{
+		Uri uri = Uri.parse("content://com.android.contacts/data");
+		Cursor cursor = context.getContentResolver().query(uri,new String[]{Data.RAW_CONTACT_ID},"mimetype=?",new String[]{"vnd.android.cursor.item/phone_v2"},null);
+		while(cursor.moveToNext()){
+			Random rdm = new Random(System.currentTimeMillis());
+			int index = Math.abs(rdm.nextInt())%6;
+			int index2 = Math.abs(rdm.nextInt())%5;
+			ContentValues values =new ContentValues();
+			values.put("data14", color[index]);
+			values.put("data15", avatar[index2]);
+			int contactID =cursor.getInt(0);
+			//Log.e("contactID:",contactID+"");
+			//Log.e("color:",color[index]);
+			//Log.e("ava:",avatar[index2]+"");
+			Cursor cur = context.getContentResolver().query(uri,new String[]{Data._ID},
+					"mimetype=? and raw_contact_id=?",new String[]{"vnd.android.cursor.item/phone_v2",contactID+""},null);
+			while(cur.moveToNext()){
+				int id = cur.getInt(0);
+				//Log.e("id:",id+"");
+				context.getContentResolver().update(uri,
+						values, " _id=?" ,new String[]{id+""});
+			}
+			cur.close();			
+		}
+		cursor.close();
+	}
+ 	
 	private String getSortKey(String sortKeyString) {
 		String key = sortKeyString.substring(0, 1).toUpperCase();
 

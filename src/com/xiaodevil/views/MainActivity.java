@@ -154,7 +154,8 @@ public class MainActivity extends ActionBarActivity {
      * 
      */
     private void setupViews(){
-    	contactsListView = (IndexableListView) findViewById(R.id.contancts_list);  	
+    	contactsListView = (IndexableListView) findViewById(R.id.contancts_list); 
+    	//DataHelper.getInstance().setAvatar(getApplicationContext());
     	users = DataHelper.getInstance().queryContact(getApplicationContext());
     	adapter = new ContactAdapter(this, R.layout.contact_item, users);
 		if(users.size() > 0){
