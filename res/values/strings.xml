@@ -9,8 +9,8 @@
     <string name="action_modify">修改联系人</string>
     <string name="action_delete">删除联系人</string>
     <string name="action_share">分享联系人</string>
-	<string name="action_order_type">排序方式:</string>
-	<string name="action_letter_order_type">首字母排序:</string>
-	<string name="action_name_order_type">姓氏排序:</string>
+	<string name="order_type">排序方式:</string>
+	<string name="letter_order_type">首字母排序:</string>
+	<string name="name_order_type">姓氏排序:</string>
 	
 </resources>

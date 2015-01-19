@@ -6,7 +6,7 @@
 <TextView 
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="@string/action_order_type"
+    android:text="@string/order_type"
     android:paddingLeft="18dp"
     android:paddingTop="10dp"
     android:textSize="26sp"/>    
@@ -21,12 +21,12 @@
     android:id="@+id/letter_button"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"  
-    android:text="@string/action_letter_order_type"/>
+    android:text="@string/letter_order_type"/>
 <RadioButton
     android:id="@+id/hanzi_button"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="@string/action_name_order_type"/>
+    android:text="@string/name_order_type"/>
 </RadioGroup>
     
 
