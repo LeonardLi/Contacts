@@ -9,6 +9,7 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.MenuItemCompat.OnActionExpandListener;
@@ -34,8 +35,8 @@ public class MainActivity extends ActionBarActivity {
 	private ContactAdapter adapter;
 	private List<User> users;
 	private SearchView searchview;
-
-	
+    private SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
 	
 	private Intent intent = new Intent();
 	private User selectedUser = new User();
@@ -50,7 +51,9 @@ public class MainActivity extends ActionBarActivity {
         Log.i(TAG,"MainActivity start");
         initPreferences();
         setupViews();
-       
+        
+   
+        
      
         contactsListView.setOnItemClickListener(new OnItemClickListener()
 		{
@@ -163,8 +166,7 @@ public class MainActivity extends ActionBarActivity {
      * 
      * 
      */
-    private void setupContactsListView(){
-    	
+    private void setupContactsListView(){    	
     	contactsListView.setAdapter(adapter);
     	contactsListView.setFastScrollEnabled(true); 	
     }
@@ -179,7 +181,10 @@ public class MainActivity extends ActionBarActivity {
 
 
     
-	private  void initPreferences(){
-		
+	private  void initPreferences(){	
+        preferences = getSharedPreferences("settings",MODE_PRIVATE);
+        editor=preferences.edit();
+        editor.putString("readType", "letter");
+        editor.commit();
 	}
 }

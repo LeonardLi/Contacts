@@ -2,8 +2,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
-
+    android:orientation="vertical" >
+<TextView 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="排序方式:"
+    android:paddingLeft="18dp"
+    android:paddingTop="10dp"
+    android:textSize="26sp"
+/>
+    
+<RadioGroup 
+    android:id="@+id/radio_group"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="30dp"
+	android:layout_gravity="center_vertical">
+<RadioButton 
+    android:id="@+id/letter_button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"  
+    android:text="首字母排序"
+    />
+<RadioButton
+    android:id="@+id/hanzi_button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="姓氏排序"
+    />
+</RadioGroup>
+    
 
 </LinearLayout>
