@@ -6,12 +6,10 @@
 <TextView 
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="排序方式:"
+    android:text="@string/action_order_type"
     android:paddingLeft="18dp"
     android:paddingTop="10dp"
-    android:textSize="26sp"
-/>
-    
+    android:textSize="26sp"/>    
 <RadioGroup 
     android:id="@+id/radio_group"
     android:layout_width="wrap_content"
@@ -23,14 +21,12 @@
     android:id="@+id/letter_button"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"  
-    android:text="首字母排序"
-    />
+    android:text="@string/action_letter_order_type"/>
 <RadioButton
     android:id="@+id/hanzi_button"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="姓氏排序"
-    />
+    android:text="@string/action_name_order_type"/>
 </RadioGroup>
     
 

@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.xiaodevil.contacts.R;
 import com.xiaodevil.models.User;
+import com.xiaodevil.views.SettingsActivity;
 
 public class ContactAdapter extends BaseAdapter implements SectionIndexer,Filterable{
 		
@@ -38,7 +39,7 @@ public class ContactAdapter extends BaseAdapter implements SectionIndexer,Filter
 		mObjects = list;
 		this.context = context;
 		this.resourceId = resourceid;
-		preferences = this.context.getSharedPreferences("settings", Context.MODE_PRIVATE);
+		preferences = this.context.getSharedPreferences(SettingsActivity.KEY_SETTINGS, Context.MODE_PRIVATE);
 	}
 
 	@Override
@@ -59,13 +60,12 @@ public class ContactAdapter extends BaseAdapter implements SectionIndexer,Filter
 		avatar_bg.setBackgroundColor(android.graphics.Color.parseColor(color[index]));
 		
 		name.setText(user.getUserName());
-		Log.e(TAG,preferences.getString("readType","letter"));
-		if(preferences.getString("readType","letter").equals("letter"))
+		if(preferences.getString(SettingsActivity.KEY_READTYPE,SettingsActivity.KEY_LETTER).equals("letter"))
 		{
 			
 			avatar.setText(user.getSortKey());
 		}
-		if(preferences.getString("readType","letter").equals("hanzi"))
+		if(preferences.getString(SettingsActivity.KEY_READTYPE,SettingsActivity.KEY_HANZI).equals("hanzi"))
 		{
 			avatar.setText(user.getUserName().substring(0,1));
 		}

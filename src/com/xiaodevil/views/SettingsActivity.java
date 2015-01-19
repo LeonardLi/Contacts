@@ -14,10 +14,15 @@ public class SettingsActivity extends ActionBarActivity{
 	private SharedPreferences settings;
 	private SharedPreferences.Editor editor;
 	private Context useCount  = null;
-	
+	private String type;
 	private RadioGroup radioGroup=null;
 	private RadioButton letterButton=null;
 	private RadioButton hanziButton=null;
+	public static final  String KEY_SETTINGS = "settings";
+	public static final  String KEY_READTYPE = "readType";
+	public static final  String KEY_LETTER = "letter";
+	public static final  String KEY_HANZI = "hanzi";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
@@ -25,16 +30,16 @@ public class SettingsActivity extends ActionBarActivity{
 		useCount=this.getApplicationContext();
 		
 		
-		settings = useCount.getSharedPreferences("settings", MODE_PRIVATE);
+		settings = useCount.getSharedPreferences(KEY_SETTINGS, MODE_PRIVATE);
 		editor = settings.edit();
 		
 		radioGroup=(RadioGroup)findViewById(R.id.radio_group);
 		letterButton=(RadioButton)findViewById(R.id.letter_button);
 		hanziButton=(RadioButton)findViewById(R.id.hanzi_button);
-		
-		if(settings.getString("readType", "hanzi").equals("hanzi"))
+		type = settings.getString(KEY_READTYPE, KEY_HANZI);
+		if(type.equals(KEY_HANZI))
 			hanziButton.setChecked(true);
-		if(settings.getString("readType", "hanzi").equals("letter"))
+		if(type.equals(KEY_LETTER))
 			letterButton.setChecked(true);
 		
 		radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -45,14 +50,12 @@ public class SettingsActivity extends ActionBarActivity{
 				if(checkedId==letterButton.getId())
 				{
 					//set sharepreference to leeter
-					editor.putString("readType", "letter");
-					System.out.println("letter");
+					editor.putString(KEY_READTYPE, KEY_LETTER);
 				}
 				if(checkedId==hanziButton.getId())
 				{
-					System.out.println("hanzi");
 					//set sharepreference to hanzi
-					editor.putString("readType", "hanzi");		
+					editor.putString(KEY_READTYPE, KEY_HANZI);		
 				}
 				editor.commit();
 			}
