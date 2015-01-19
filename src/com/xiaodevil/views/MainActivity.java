@@ -9,9 +9,7 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.MenuItemCompat.OnActionExpandListener;
 import android.support.v7.app.ActionBarActivity;
@@ -42,8 +40,6 @@ public class MainActivity extends ActionBarActivity {
 	private Intent intent = new Intent();
 	private User selectedUser = new User();
 	private final static String TAG = "com.xiaodevil.views.MainActivity";
-	private Cursor cursor;
-	private Handler handler = new Handler();
 	public final static String SER_KEY = "com.xiaode.user";
 	
 	
@@ -72,12 +68,12 @@ public class MainActivity extends ActionBarActivity {
 		});
         
     }
+    
     @SuppressLint("NewApi")
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-    	getMenuInflater().inflate(R.menu.main, menu);
-    	
+    	getMenuInflater().inflate(R.menu.main, menu);    	
     	MenuItem searchItem = menu.findItem(R.id.action_search);
     	searchview = (SearchView)MenuItemCompat.getActionView(searchItem);
 		return super.onCreateOptionsMenu(menu);
@@ -90,7 +86,6 @@ public class MainActivity extends ActionBarActivity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_add) {
-			//Toast.makeText(getApplicationContext(), "action_settings",Toast.LENGTH_SHORT).show();
 			intent.setClass(MainActivity.this, AddNewContactsActivity.class);
 			startActivity(intent);
 			return true;
@@ -107,22 +102,19 @@ public class MainActivity extends ActionBarActivity {
 			return true;
 		}
 		if (id == R.id.action_search) {
-			//Toast.makeText(getApplicationContext(), "action_about",Toast.LENGTH_SHORT).show();
 			searchview.setIconified(false);
 			searchview.setSubmitButtonEnabled(true);
 			searchview.setOnQueryTextListener(new OnQueryTextListener() {
 				
 				@Override
 				public boolean onQueryTextSubmit(String s) {
-					Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-					adapter.getFilter().filter(s);
 					return false;
 				}
 				
 				@Override
 				public boolean onQueryTextChange(String s) {
-					
-					return false;
+					adapter.getFilter().filter(s);
+					return true;
 				}
 			});
 			
@@ -136,7 +128,7 @@ public class MainActivity extends ActionBarActivity {
 				
 				@Override
 				public boolean onMenuItemActionCollapse(MenuItem arg0) {
-						Toast.makeText(getApplicationContext(), "over", Toast.LENGTH_SHORT).show();
+						//Toast.makeText(getApplicationContext(), "over", Toast.LENGTH_SHORT).show();
 						adapter.getFilter().filter("");
 					return true;
 				}
@@ -183,16 +175,8 @@ public class MainActivity extends ActionBarActivity {
      *@return
      *
      */
-    @SuppressLint("DefaultLocale")
-	private String getSortKey(String sortKeyString){
-    	String key = sortKeyString.substring(0,1).toUpperCase();
 
-    	if(key.matches("[A-Z]")){
-    		
-    		return key;
-    	}
-    	return "#";
-    }
+
 
     
 	private  void initPreferences(){

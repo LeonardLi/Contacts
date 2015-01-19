@@ -35,6 +35,21 @@
                 
             </intent-filter>
         </activity>
+        
+        <activity
+            android:name="com.xiaodevil.views.SettingsActivity" 
+            android:label="@string/app_name">          
+        </activity>
+        
+         <activity
+            android:name="com.xiaodevil.views.ModifyContactActivity" 
+            android:label="@string/app_name">           
+        </activity>
+        
+        <activity
+            android:name="com.xiaodevil.views.AboutActivity" 
+            android:label="@string/app_name" >          
+        </activity>
     </application>
 
 </manifest>

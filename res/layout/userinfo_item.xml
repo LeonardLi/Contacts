@@ -26,6 +26,7 @@
    	android:layout_height="wrap_content"
     android:contentDescription="@string/app_name"
     android:src="@drawable/ic_person_grey600_36dp"
+    android:focusable="false"
     />   
 </LinearLayout>
 

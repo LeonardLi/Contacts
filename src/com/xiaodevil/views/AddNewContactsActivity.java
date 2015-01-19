@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.xiaodevil.contacts.R;
 import com.xiaodevil.database.DataHelper;
@@ -32,6 +33,8 @@ public class AddNewContactsActivity extends Activity{
 	private String qq;
 	private User user;
 	private ArrayList<String[]> phoneNumbers = new ArrayList<String[]>();
+	private final String ADD_SUCCEED = "已添加";
+	private final String Add_FAILED ="添加失败";
 	
 	private final static String TAG = "com.xiaodevil.views.AddNewContactsActivity";
 	@Override
@@ -60,8 +63,6 @@ public class AddNewContactsActivity extends Activity{
 				list.add(pho);
 				user.setPhoneNumbers(list);
 				
-				Log.e("jialin1",list.size()+"");
-				Log.e("jialin2", user.getPhoneNumbers().size()+"");
 				//phoneNumbers.add(new String[]{inputPhoneNumber.getText().toString()});
 				//user.setPhoneNumbers(phoneNumbers);
 				//qq = inputQQ.getText().toString();
@@ -69,6 +70,7 @@ public class AddNewContactsActivity extends Activity{
 				DataHelper.getInstance().addContacts(getApplicationContext(), user);
 				Intent intent = new Intent();
 				intent.setClass(AddNewContactsActivity.this, MainActivity.class);
+				Toast.makeText(getApplicationContext(), ADD_SUCCEED, Toast.LENGTH_SHORT).show();
 				startActivity(intent);
 				
 			}
