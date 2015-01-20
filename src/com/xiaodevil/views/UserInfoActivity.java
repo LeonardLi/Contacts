@@ -38,15 +38,16 @@ public class UserInfoActivity extends ActionBarActivity {
 	private TextView ContactName;
 	private ImageView Infobackground;
 	private ListView UserInfo;
+	private CircleImageView CircleAvatar;
 	private User user;
 	private Intent intent;
-	private final String[] color = { "#eae8ff", "#d8d5d8", "#adacb5",
-			"#2d3142", "#b0d7ff" };
 	private final String CONFIRM_MSG = "确认删除么？";
 	private final String CONFIRM_MSG_YES = "是";
 	private final String CONFIRM_MSG_NO = "否";
 	private final String CONFIRM_MSG_DELETED = "已删除";
-
+	public final static String[] color = {"#00529c","#80a8cc","#ccdceb","#01b169","#82d8b5","#cdefe1"};
+	public final static int[] avatar ={R.drawable.avatar_daxiang,R.drawable.avatar_fox,R.drawable.avatar_konglong,R.drawable.avatar_monster,R.drawable.avatar_wolf};
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -54,13 +55,7 @@ public class UserInfoActivity extends ActionBarActivity {
 		Log.i(TAG, "UserInfoActivity start");
 		ContactName = (TextView) findViewById(R.id.name);
 		Infobackground = (ImageView) findViewById(R.id.info_avatar_bg);
-		Random rdm = new Random(System.currentTimeMillis());
-		int index = Math.abs(rdm.nextInt()) % 5;
-		Infobackground.setBackgroundColor(android.graphics.Color
-				.parseColor(color[index]));
-
-		// dia = (Button)findViewById(R.id.dia);
-		// msg = (Button)findViewById(R.id.msg);
+		CircleAvatar = (CircleImageView) findViewById(R.id.circleImageView1);
 
 		intent = this.getIntent();
 
@@ -120,6 +115,9 @@ public class UserInfoActivity extends ActionBarActivity {
 		user = (User) intent.getSerializableExtra(MainActivity.SER_KEY);
 		if (user != null) {
 			ContactName.setText(user.getUserName());
+			Infobackground.setBackgroundColor(android.graphics.Color
+					.parseColor(user.getBgColor()));
+			CircleAvatar.setImageResource(user.getAvatarId());
 		}
 
 		listAdapter = new UserInfoAdapter(this, R.layout.userinfo_item,
