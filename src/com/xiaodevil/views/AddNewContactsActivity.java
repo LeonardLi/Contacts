@@ -62,7 +62,8 @@ public class AddNewContactsActivity extends Activity{
 				pho.setType(1);
 				list.add(pho);
 				user.setPhoneNumbers(list);
-				
+				//user.setEmail("915966");
+				//user.setTeam("univ");
 				//phoneNumbers.add(new String[]{inputPhoneNumber.getText().toString()});
 				//user.setPhoneNumbers(phoneNumbers);
 				//qq = inputQQ.getText().toString();
