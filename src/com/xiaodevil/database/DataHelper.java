@@ -126,9 +126,6 @@ public class DataHelper {
 				int type = cursor.getInt(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DATA2));
 				String col = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DATA14));
 				int ava = cursor.getInt(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DATA15));	
-				//Log.e("name:",name);
-				//Log.e("color2:",col);
-				//Log.e("avatar2:",ava+"");
 				User user = new User();
 				user.setUserName(name);
 				user.setSortKey(sortKey);
@@ -195,7 +192,6 @@ public class DataHelper {
 		ContentResolver contentResolver = context.getContentResolver();
 		Cursor cursor = contentResolver.query(
 				ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
-		// int columnNumber = cursor.getColumnCount();
 		while (cursor.moveToNext()) {
 			StringBuilder sb = new StringBuilder();
 			String name = cursor.getString(cursor
@@ -215,7 +211,6 @@ public class DataHelper {
 				sb.append(",phone=").append(phoneNuber);
 			}
 			phones.close();
-			// Log.i(TAG, sb.toString());
 		}
 		cursor.close();
 
@@ -237,14 +232,10 @@ public class DataHelper {
 			values.put("data14", color[index]);
 			values.put("data15", avatar[index2]);
 			int contactID =cursor.getInt(0);
-			//Log.e("contactID:",contactID+"");
-			//Log.e("color:",color[index]);
-			//Log.e("ava:",avatar[index2]+"");
 			Cursor cur = context.getContentResolver().query(uri,new String[]{Data._ID},
 					"mimetype=? and raw_contact_id=?",new String[]{"vnd.android.cursor.item/phone_v2",contactID+""},null);
 			while(cur.moveToNext()){
 				int id = cur.getInt(0);
-				//Log.e("id:",id+"");
 				context.getContentResolver().update(uri,
 						values, " _id=?" ,new String[]{id+""});
 			}
