@@ -45,7 +45,7 @@ public class UserInfoActivity extends ActionBarActivity {
 	private final String CONFIRM_MSG_YES = "是";
 	private final String CONFIRM_MSG_NO = "否";
 	private final String CONFIRM_MSG_DELETED = "已删除";
-	public final static String[] color = {"#00529c","#80a8cc","#ccdceb","#01b169","#82d8b5","#cdefe1"};
+	public final static String[] color = {"#00529c","#80a8cc","#ccdceb","#01b169","#82d8b5"};
 	public final static int[] avatar ={R.drawable.avatar_daxiang,R.drawable.avatar_fox,R.drawable.avatar_konglong,R.drawable.avatar_monster,R.drawable.avatar_wolf};
 	
 	@Override
