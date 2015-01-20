@@ -17,11 +17,11 @@ import android.provider.ContactsContract.Data;
 
 import com.xiaodevil.models.PhoneNumber;
 import com.xiaodevil.models.User;
+import com.xiaodevil.views.UserInfoActivity;
 
 public class DataHelper {
 	private static final String TAG = "com.example.test.DataHelper";
-	private String[] color = {"#3d315b","#444b6e","#708b75","#9ab875","#b0d7ff","#ec6623"};
-	private int[] avatar ={1,2,3,4,5};
+	
 	// public static final int TYPE_HOME = 1;
 	// public static final int TYPE_MOBILE = 2;
 	// public static final int TYPE_WORK = 3;
@@ -229,8 +229,8 @@ public class DataHelper {
 			int index = Math.abs(rdm.nextInt())%6;
 			int index2 = Math.abs(rdm.nextInt())%5;
 			ContentValues values =new ContentValues();
-			values.put("data14", color[index]);
-			values.put("data15", avatar[index2]);
+			values.put("data14", UserInfoActivity.color[index]);
+			values.put("data15", UserInfoActivity.avatar[index2]);
 			int contactID =cursor.getInt(0);
 			Cursor cur = context.getContentResolver().query(uri,new String[]{Data._ID},
 					"mimetype=? and raw_contact_id=?",new String[]{"vnd.android.cursor.item/phone_v2",contactID+""},null);

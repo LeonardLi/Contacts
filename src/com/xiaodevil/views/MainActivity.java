@@ -42,7 +42,7 @@ public class MainActivity extends ActionBarActivity {
 	private User selectedUser = new User();
 	private final static String TAG = "com.xiaodevil.views.MainActivity";
 	public final static String SER_KEY = "com.xiaode.user";
-	
+	public final static String JUDGE_KEY = "isFirstTime";
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +50,13 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         Log.i(TAG,"MainActivity start");
         initPreferences();
+        //第一次初始化
+    	if(preferences.getString(JUDGE_KEY, "true").equals("true"))
+    	{
+    		editor.putString(JUDGE_KEY, "false");
+			editor.commit();
+			DataHelper.getInstance().setAvatar(getApplicationContext());	
+    	}
         setupViews();
         
    
@@ -155,7 +162,10 @@ public class MainActivity extends ActionBarActivity {
      */
     private void setupViews(){
     	contactsListView = (IndexableListView) findViewById(R.id.contancts_list); 
-    	//DataHelper.getInstance().setAvatar(getApplicationContext());
+    	
+    	
+    	
+    		
     	users = DataHelper.getInstance().queryContact(getApplicationContext());
     	adapter = new ContactAdapter(this, R.layout.contact_item, users);
 		if(users.size() > 0){
@@ -186,6 +196,7 @@ public class MainActivity extends ActionBarActivity {
         preferences = getSharedPreferences("settings",MODE_PRIVATE);
         editor=preferences.edit();
         editor.putString("readType", "letter");
+        editor.putString(JUDGE_KEY, "true");
         editor.commit();
 	}
 }
