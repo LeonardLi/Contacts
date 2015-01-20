@@ -19,7 +19,6 @@ import com.xiaodevil.models.PhoneNumber;
 import com.xiaodevil.models.User;
 
 public class DataHelper {
-	private static final String TAG = "com.example.test.DataHelper";
 	private String[] color = {"#3d315b","#444b6e","#708b75","#9ab875","#b0d7ff","#ec6623"};
 	private int[] avatar ={1,2,3,4,5};
 	// public static final int TYPE_HOME = 1;
@@ -73,7 +72,16 @@ public class DataHelper {
 		values.put("data1", user.getUserName());
 		resolver.insert(uri, values);
 		values.clear();
-
+		values.put("raw_contact_id", contact_id);
+		values.put(Data.MIMETYPE, "vnd.android.cursor.item/organization");
+		values.put("data1",user.getTeam() );
+		resolver.insert(uri, values);
+		values.clear();
+		values.put("raw_contact_id", contact_id);
+		values.put(Data.MIMETYPE, "vnd.android.cursor.item/email_v2");
+		values.put("data1",user.getEmail() );
+		resolver.insert(uri, values);
+		values.clear();
 		for (int i = 0; i < user.getPhoneNumbers().size(); i++) {
 			values.put("raw_contact_id", contact_id);
 			values.put(Data.MIMETYPE, "vnd.android.cursor.item/phone_v2");
@@ -112,25 +120,46 @@ public class DataHelper {
 		ArrayList<User> users = new ArrayList<>();
 		Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
 		Cursor cursor = context.getContentResolver().query(uri,
-				new String[] { "display_name", "sort_key"
+				new String[] { "display_name", "sort_key",ContactsContract.CommonDataKinds.Phone.CONTACT_ID
 			,ContactsContract.CommonDataKinds.Phone.NUMBER,ContactsContract.CommonDataKinds.Phone.DATA2,
 			ContactsContract.CommonDataKinds.Phone.DATA14,ContactsContract.CommonDataKinds.Phone.DATA15,}, null,
 				null, "sort_key");
 		if (cursor.moveToFirst()) {
 			do {
 				String pre_name =null; 
+				String email =null;
+				String team =null;
 				String name = cursor.getString(0);
 				String sortKey = getSortKey(cursor.getString(cursor
 						.getColumnIndex("sort_key")));
+				int contactID =cursor.getInt(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID));
 				String number =cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
 				int type = cursor.getInt(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DATA2));
 				String col = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DATA14));
 				int ava = cursor.getInt(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DATA15));	
+				Cursor cur =context.getContentResolver().query(Uri.parse("content://com.android.contacts/data"), 
+						          new String[]{Data.DATA1}, "mimetype=? and raw_contact_id=?", new String[]{"vnd.android.cursor.item/email_v2",contactID+""}, null);
+				if(cur.moveToNext()){
+					 email =cur.getString(0);
+				}
+				cur.close();
+				cur = context.getContentResolver().query(Uri.parse("content://com.android.contacts/data"), 
+				          new String[]{Data.DATA1}, "mimetype=? and raw_contact_id=?", new String[]{"vnd.android.cursor.item/organization",contactID+""}, null);
+				if(cur.moveToNext()){
+					 team =cur.getString(0);
+				}
+				cur.close();
 				User user = new User();
 				user.setUserName(name);
 				user.setSortKey(sortKey);
 				user.setBgColor(col);
 				user.setAvatarId(ava);
+				if(email != null){
+					user.setEmail(email);
+				}
+				if(team != null ){
+					user.setTeam(team);
+				}
 				ArrayList<PhoneNumber> nums = new ArrayList<>();
 					do{
 						PhoneNumber num = new PhoneNumber();
