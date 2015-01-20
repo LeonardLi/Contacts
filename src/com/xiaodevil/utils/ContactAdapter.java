@@ -25,7 +25,7 @@ import com.xiaodevil.views.SettingsActivity;
 public class ContactAdapter extends BaseAdapter implements SectionIndexer,Filterable{
 		
 	private static final String mSections = "#ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	private String[] color = {"#3d315b","#444b6e","#708b75","#9ab875","#b0d7ff","#ec6623"};
+
 	private int resourceId;
 	private List<User> mObjects;
 	private ArrayList<User> mOriginalValues;
@@ -55,10 +55,7 @@ public class ContactAdapter extends BaseAdapter implements SectionIndexer,Filter
 		TextView name = (TextView) layout.findViewById(R.id.name);
 		TextView avatar = (TextView) layout.findViewById(R.id.avatar_letter);
 		ImageButton avatar_bg = (ImageButton) layout.findViewById(R.id.avatar);
-		Random rdm = new Random(System.currentTimeMillis());
-		int index = Math.abs(rdm.nextInt())%6;
-		avatar_bg.setBackgroundColor(android.graphics.Color.parseColor(color[index]));
-		
+		avatar_bg.setBackgroundColor(android.graphics.Color.parseColor(user.getBgColor()));
 		name.setText(user.getUserName());
 		if(preferences.getString(SettingsActivity.KEY_READTYPE,SettingsActivity.KEY_LETTER).equals("letter"))
 		{
@@ -69,6 +66,7 @@ public class ContactAdapter extends BaseAdapter implements SectionIndexer,Filter
 		{
 			avatar.setText(user.getUserName().substring(0,1));
 		}
+		
 		return layout;
 	}
 
