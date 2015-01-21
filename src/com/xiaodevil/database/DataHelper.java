@@ -14,6 +14,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Data;
+import android.util.Log;
 
 import com.xiaodevil.models.PhoneNumber;
 import com.xiaodevil.models.User;
@@ -21,7 +22,7 @@ import com.xiaodevil.views.UserInfoActivity;
 
 public class DataHelper {
 	private static final String TAG = "com.example.test.DataHelper";
-	
+
 	// public static final int TYPE_HOME = 1;
 	// public static final int TYPE_MOBILE = 2;
 	// public static final int TYPE_WORK = 3;
@@ -73,7 +74,25 @@ public class DataHelper {
 		values.put("data1", user.getUserName());
 		resolver.insert(uri, values);
 		values.clear();
-
+		if (user.getTeam() != null) {
+			values.put("raw_contact_id", contact_id);
+			values.put(Data.MIMETYPE, "vnd.android.cursor.item/organization");
+			values.put("data1", user.getTeam());
+			resolver.insert(uri, values);
+			values.clear();
+		}
+		if (user.getEmail() != null) {
+			values.put("raw_contact_id", contact_id);
+			values.put(Data.MIMETYPE, "vnd.android.cursor.item/email_v2");
+			values.put("data1", user.getEmail());
+			resolver.insert(uri, values);
+			values.clear();
+		}
+		Random rdm = new Random(System.currentTimeMillis());
+		int index = Math.abs(rdm.nextInt())%5;
+		int index2 = Math.abs(rdm.nextInt())%5;
+		user.setBgColor(UserInfoActivity.color[index]);
+		user.setAvatarId(UserInfoActivity.avatar[index2]);
 		for (int i = 0; i < user.getPhoneNumbers().size(); i++) {
 			values.put("raw_contact_id", contact_id);
 			values.put(Data.MIMETYPE, "vnd.android.cursor.item/phone_v2");
@@ -103,53 +122,101 @@ public class DataHelper {
 		}
 
 	}
-/**
- * 
- * @param context
- * @return
- */
+
+	/**
+	 * 
+	 * @param context
+	 * @return
+	 */
 	public ArrayList<User> queryContact(Context context) {
 		ArrayList<User> users = new ArrayList<>();
 		Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
-		Cursor cursor = context.getContentResolver().query(uri,
-				new String[] { "display_name", "sort_key"
-			,ContactsContract.CommonDataKinds.Phone.NUMBER,ContactsContract.CommonDataKinds.Phone.DATA2,
-			ContactsContract.CommonDataKinds.Phone.DATA14,ContactsContract.CommonDataKinds.Phone.DATA15,}, null,
+		Cursor cursor = context.getContentResolver().query(
+				uri,
+				new String[] { "display_name", "sort_key",
+						ContactsContract.CommonDataKinds.Phone.NUMBER,
+						ContactsContract.CommonDataKinds.Phone.CONTACT_ID,
+						ContactsContract.CommonDataKinds.Phone.DATA2,
+						ContactsContract.CommonDataKinds.Phone.DATA14,
+						ContactsContract.CommonDataKinds.Phone.DATA15, }, null,
 				null, "sort_key");
 		if (cursor.moveToFirst()) {
 			do {
-				String pre_name =null; 
+				String pre_name = null;
+				String email = null;
+				String team = null;
 				String name = cursor.getString(0);
 				String sortKey = getSortKey(cursor.getString(cursor
 						.getColumnIndex("sort_key")));
-				String number =cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-				int type = cursor.getInt(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DATA2));
-				String col = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DATA14));
-				int ava = cursor.getInt(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DATA15));	
+				String number = cursor
+						.getString(cursor
+								.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+				int contactID = cursor
+						.getInt(cursor
+								.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID));
+				int type = cursor
+						.getInt(cursor
+								.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DATA2));
+				String col = cursor
+						.getString(cursor
+								.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DATA14));
+				int ava = cursor
+						.getInt(cursor
+								.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DATA15));
+				Cursor cur = context.getContentResolver().query(
+						Uri.parse("content://com.android.contacts/data"),
+						new String[] { Data.DATA1 },
+						"mimetype=? and raw_contact_id=?",
+						new String[] { "vnd.android.cursor.item/email_v2",
+								contactID + "" }, null);
+				if (cur.moveToFirst()) {
+					email = cur.getString(0);
+				}
+				cur.close();
+				cur = context.getContentResolver().query(
+						Uri.parse("content://com.android.contacts/data"),
+						new String[] { Data.DATA1 },
+						"mimetype=? and raw_contact_id=?",
+						new String[] { "vnd.android.cursor.item/organization",
+								contactID + "" }, null);
+				if (cur.moveToFirst()) {
+					team = cur.getString(0);
+				}
+				cur.close();
 				User user = new User();
+				if(email != null){
+					user.setEmail(email);
+				}
+				if(team != null ){
+					user.setTeam(team);
+				}
 				user.setUserName(name);
 				user.setSortKey(sortKey);
 				user.setBgColor(col);
 				user.setAvatarId(ava);
 				ArrayList<PhoneNumber> nums = new ArrayList<>();
-					do{
-						PhoneNumber num = new PhoneNumber();
-						num.setPhoneNumber(number);
-						num.setType(type);
-						nums.add(num);
-						pre_name =name;
-						if(cursor.moveToNext()){
-							 name = cursor.getString(0);
-							 sortKey = getSortKey(cursor.getString(cursor
-									.getColumnIndex("sort_key")));
-							 number =cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-							 type=(int)cursor.getLong(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DATA2));
-						}
-						else break;
-					}while(pre_name.equals(name));
-					user.setPhoneNumbers(nums);
-					users.add(user);
-					cursor.moveToPrevious();
+				do {
+					PhoneNumber num = new PhoneNumber();
+					num.setPhoneNumber(number);
+					num.setType(type);
+					nums.add(num);
+					pre_name = name;
+					if (cursor.moveToNext()) {
+						name = cursor.getString(0);
+						sortKey = getSortKey(cursor.getString(cursor
+								.getColumnIndex("sort_key")));
+						number = cursor
+								.getString(cursor
+										.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+						type = (int) cursor
+								.getLong(cursor
+										.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DATA2));
+					} else
+						break;
+				} while (pre_name.equals(name));
+				user.setPhoneNumbers(nums);
+				users.add(user);
+				cursor.moveToPrevious();
 			} while (cursor.moveToNext());
 			cursor.close();
 		}
@@ -215,11 +282,12 @@ public class DataHelper {
 		cursor.close();
 
 	}
-/**
- * 
- * @param sortKeyString
- * @return
- */
+
+	/**
+	 * 
+	 * @param sortKeyString
+	 * @return
+	 */
 	public void setAvatar(Context context)
 	{
 		Uri uri = Uri.parse("content://com.android.contacts/data");
@@ -243,7 +311,7 @@ public class DataHelper {
 		}
 		cursor.close();
 	}
- 	
+
 	private String getSortKey(String sortKeyString) {
 		String key = sortKeyString.substring(0, 1).toUpperCase();
 

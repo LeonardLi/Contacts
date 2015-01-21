@@ -27,9 +27,26 @@ public class User implements Serializable {
 	private ArrayList<PhoneNumber> phoneNumbers;
 	private String nickname;
 	private String sortKey;
+	private String team;
+	private String email;
+	
+	
+	public String getTeam() {
+		return team;
+	}
 
-	
-	
+	public void setTeam(String team) {
+		this.team = team;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public int getAvatarId() {
 		return avatarId;
 	}
