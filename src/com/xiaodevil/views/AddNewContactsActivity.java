@@ -6,11 +6,10 @@
 package com.xiaodevil.views;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,7 +22,7 @@ import com.xiaodevil.database.DataHelper;
 import com.xiaodevil.models.PhoneNumber;
 import com.xiaodevil.models.User;
 
-public class AddNewContactsActivity extends Activity{
+public class AddNewContactsActivity extends ActionBarActivity{
 	private EditText inputName;
 	private EditText inputPhoneNumber;
 	private EditText inputQQ;

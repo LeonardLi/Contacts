@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <string name="app_name">Contacts</string>
@@ -12,5 +12,11 @@
 	<string name="order_type">排序方式:</string>
 	<string name="letter_order_type">首字母排序:</string>
 	<string name="name_order_type">姓氏排序:</string>
+	<string name="team_textview">群组</string>
+	<string-array name="number_type" >
+        <item >手机</item>
+        <item >工作</item>
+        <item >家庭</item>
+	</string-array> 
 	
 </resources>
