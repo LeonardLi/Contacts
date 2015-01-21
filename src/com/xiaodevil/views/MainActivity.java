@@ -163,7 +163,6 @@ public class MainActivity extends ActionBarActivity {
     	
     	
     	
-    		
     	users = DataHelper.getInstance().queryContact(getApplicationContext());
     	adapter = new ContactAdapter(this, R.layout.contact_item, users);
 		if(users.size() > 0){
