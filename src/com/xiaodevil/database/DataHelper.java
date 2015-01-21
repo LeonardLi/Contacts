@@ -226,7 +226,7 @@ public class DataHelper {
 		Cursor cursor = context.getContentResolver().query(uri,new String[]{Data.RAW_CONTACT_ID},"mimetype=?",new String[]{"vnd.android.cursor.item/phone_v2"},null);
 		while(cursor.moveToNext()){
 			Random rdm = new Random(System.currentTimeMillis());
-			int index = Math.abs(rdm.nextInt())%6;
+			int index = Math.abs(rdm.nextInt())%5;
 			int index2 = Math.abs(rdm.nextInt())%5;
 			ContentValues values =new ContentValues();
 			values.put("data14", UserInfoActivity.color[index]);

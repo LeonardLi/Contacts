@@ -24,6 +24,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
+
 import com.xiaodevil.contacts.R;
 import com.xiaodevil.database.DataHelper;
 import com.xiaodevil.models.User;
@@ -43,28 +44,25 @@ public class MainActivity extends ActionBarActivity {
 	private final static String TAG = "com.xiaodevil.views.MainActivity";
 	public final static String SER_KEY = "com.xiaode.user";
 	public final static String JUDGE_KEY = "isFirstTime";
+	static int i = 0 ;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.i(TAG,"MainActivity start");
         initPreferences();
         //第一次初始化
-    	if(preferences.getString(JUDGE_KEY, "true").equals("true"))
+        int count = preferences.getInt("count",0);
+    	if(count==0)
     	{
-    		editor.putString(JUDGE_KEY, "false");
+    		editor.putInt("count",++count);
 			editor.commit();
-			DataHelper.getInstance().setAvatar(getApplicationContext());	
+			//DataHelper.getInstance().setAvatar(getApplicationContext());			
     	}
         setupViews();
-        
-   
-        
-     
+    
         contactsListView.setOnItemClickListener(new OnItemClickListener()
 		{
-
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
@@ -196,7 +194,6 @@ public class MainActivity extends ActionBarActivity {
         preferences = getSharedPreferences("settings",MODE_PRIVATE);
         editor=preferences.edit();
         editor.putString("readType", "letter");
-        editor.putString(JUDGE_KEY, "true");
         editor.commit();
 	}
 }
