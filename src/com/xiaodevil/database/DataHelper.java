@@ -14,7 +14,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Data;
-import android.util.Log;
 
 import com.xiaodevil.models.PhoneNumber;
 import com.xiaodevil.models.User;
@@ -22,27 +21,6 @@ import com.xiaodevil.views.UserInfoActivity;
 
 public class DataHelper {
 	private static final String TAG = "com.example.test.DataHelper";
-
-	// public static final int TYPE_HOME = 1;
-	// public static final int TYPE_MOBILE = 2;
-	// public static final int TYPE_WORK = 3;
-	// public static final int TYPE_FAX_WORK = 4;
-	// public static final int TYPE_FAX_HOME = 5;
-	// public static final int TYPE_PAGER = 6;
-	// public static final int TYPE_OTHER = 7;
-	// public static final int TYPE_CALLBACK = 8;
-	// public static final int TYPE_CAR = 9;
-	// public static final int TYPE_COMPANY_MAIN = 10;
-	// public static final int TYPE_ISDN = 11;
-	// public static final int TYPE_MAIN = 12;
-	// public static final int TYPE_OTHER_FAX = 13;
-	// public static final int TYPE_RADIO = 14;
-	// public static final int TYPE_TELEX = 15;
-	// public static final int TYPE_TTY_TDD = 16;
-	// public static final int TYPE_WORK_MOBILE = 17;
-	// public static final int TYPE_WORK_PAGER = 18;
-	// public static final int TYPE_ASSISTANT = 19;
-	// public static final int TYPE_MMS = 20;
 
 	private DataHelper() {
 
@@ -163,33 +141,8 @@ public class DataHelper {
 				int ava = cursor
 						.getInt(cursor
 								.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DATA15));
-//				Cursor cur = context.getContentResolver().query(
-//						Uri.parse("content://com.android.contacts/data"),
-//						new String[] { Data.DATA1 },
-//						"mimetype=? and raw_contact_id=?",
-//						new String[] { "vnd.android.cursor.item/email_v2",
-//								contactID + "" }, null);
-//				if (cur.moveToFirst()) {
-//					email = cur.getString(0);
-//				}
-//				cur.close();
-//				cur = context.getContentResolver().query(
-//						Uri.parse("content://com.android.contacts/data"),
-//						new String[] { Data.DATA1 },
-//						"mimetype=? and raw_contact_id=?",
-//						new String[] { "vnd.android.cursor.item/organization",
-//								contactID + "" }, null);
-//				if (cur.moveToFirst()) {
-//					team = cur.getString(0);
-//				}
-//				cur.close();
+
 				User user = new User();
-//				if(email != null){
-//					user.setEmail(email);
-//				}
-//				if(team != null ){
-//					user.setTeam(team);
-//				}
 				user.setUserName(name);
 				user.setSortKey(sortKey);
 				user.setBgColor(col);

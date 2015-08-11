@@ -55,7 +55,7 @@ public class MainActivity extends ActionBarActivity {
     	{
     		editor.putInt("count",++count);
 			editor.commit();
-			//DataHelper.getInstance().setAvatar(getApplicationContext());			
+			DataHelper.getInstance().setAvatar(getApplicationContext());			
     	}
         setupViews();
     
@@ -89,7 +89,7 @@ public class MainActivity extends ActionBarActivity {
 	}
     
     /**
-     * 菜单Item点击处理回掉函数
+     * 菜单Item点击处理回调函数
      */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {

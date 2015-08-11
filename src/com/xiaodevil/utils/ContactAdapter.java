@@ -56,8 +56,8 @@ public class ContactAdapter extends BaseAdapter implements SectionIndexer,Filter
 		TextView avatar = (TextView) layout.findViewById(R.id.avatar_letter);
 		ImageButton avatar_bg = (ImageButton) layout.findViewById(R.id.avatar);
 		avatar_bg.setBackgroundColor(android.graphics.Color.parseColor(user.getBgColor()));
-		
 		name.setText(user.getUserName());
+		
 		if(preferences.getString(SettingsActivity.KEY_READTYPE,SettingsActivity.KEY_LETTER).equals("letter"))
 		{
 			
