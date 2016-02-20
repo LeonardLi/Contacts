@@ -65,7 +65,7 @@ public class MainActivity extends ActionBarActivity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				Bundle mBundle = new Bundle();
-				selectedUser = (User)adapter.getItem(arg2);
+				selectedUser = adapter.getItem(arg2);
 				mBundle.putSerializable(SER_KEY, selectedUser);
 				intent.putExtras(mBundle);
 				intent.setClass(MainActivity.this, UserInfoActivity.class);

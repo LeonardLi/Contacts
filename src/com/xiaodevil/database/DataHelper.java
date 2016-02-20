@@ -60,7 +60,7 @@ public class DataHelper {
 	/**
 	 * 
 	 * @param context
-	 * @param use
+	 * @param user
 	 */
 	public void addContacts(Context context, User user) {
 
@@ -106,7 +106,7 @@ public class DataHelper {
 	/**
 	 * 
 	 * @param context
-	 * @param na
+	 * @param use
 	 */
 	public void deletContact(Context context, User use) {
 		Uri uri = Uri.parse("content://com.android.contacts/raw_contacts");
@@ -129,7 +129,7 @@ public class DataHelper {
 	 * @return
 	 */
 	public ArrayList<User> queryContact(Context context) {
-		ArrayList<User> users = new ArrayList<>();
+		ArrayList<User> users = new ArrayList<User>();
 		Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
 		Cursor cursor = context.getContentResolver().query(
 				uri,
@@ -194,7 +194,7 @@ public class DataHelper {
 				user.setSortKey(sortKey);
 				user.setBgColor(col);
 				user.setAvatarId(ava);
-				ArrayList<PhoneNumber> nums = new ArrayList<>();
+				ArrayList<PhoneNumber> nums = new ArrayList<PhoneNumber>();
 				do {
 					PhoneNumber num = new PhoneNumber();
 					num.setPhoneNumber(number);
@@ -285,7 +285,7 @@ public class DataHelper {
 
 	/**
 	 * 
-	 * @param sortKeyString
+	 * @param context
 	 * @return
 	 */
 	public void setAvatar(Context context)

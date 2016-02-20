@@ -17,8 +17,8 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
-
 import com.xiaodevil.contacts.R;
+
 import com.xiaodevil.models.User;
 import com.xiaodevil.views.SettingsActivity;
 
@@ -42,7 +42,7 @@ public class ContactAdapter extends BaseAdapter implements SectionIndexer,Filter
 		preferences = this.context.getSharedPreferences(SettingsActivity.KEY_SETTINGS, Context.MODE_PRIVATE);
 	}
 
-	@Override
+
 	public View getView(int position, View convertView, ViewGroup parent){
 		User user = this.getItem(position);
 		LinearLayout layout = null;
@@ -71,7 +71,7 @@ public class ContactAdapter extends BaseAdapter implements SectionIndexer,Filter
 		return layout;
 	}
 
-	@Override
+
 	public int getPositionForSection(int section) {
 		// If there is no item for current section, previous section will be selected
 		for (int i = section; i >= 0; i--) {
@@ -91,12 +91,12 @@ public class ContactAdapter extends BaseAdapter implements SectionIndexer,Filter
 		return 0;
 	}
 
-	@Override
+
 	public int getSectionForPosition(int position) {
 		return 0;
 	}
 
-	@Override
+
 	public Object[] getSections() {
 		String[] sections = new String[mSections.length()];
 		for (int i = 0; i < mSections.length(); i++)
@@ -180,17 +180,17 @@ public class ContactAdapter extends BaseAdapter implements SectionIndexer,Filter
             }
         }
 	}
-	@Override
+
 	public int getCount() {
 		return mObjects.size();
 	}
 
-	@Override
+
 	public User getItem(int position) {
 		return mObjects.get(position);
 	}
 
-	@Override
+
 	public long getItemId(int position) {
 		return position;
 	}

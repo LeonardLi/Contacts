@@ -62,7 +62,7 @@ public class UserInfoAdapter extends ArrayAdapter<PhoneNumber>{
 		public msgButtonListener(int pos, Context con) {
 			context = con;
 		}
-		@Override
+
 		public void onClick(View v) {
 			int vid = v.getId();
 			if(vid == holder.msgButton.getId()){

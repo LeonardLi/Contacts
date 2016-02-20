@@ -1,6 +1,5 @@
 package com.xiaodevil.utils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -18,7 +17,6 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.xiaodevil.contacts.R;
@@ -47,7 +45,7 @@ public class PhoneNumberAdapter extends BaseAdapter{
 	
 	}
 	
-	@Override
+
 	public View getView(int position, View convertView, ViewGroup parent){
 		if (convertView == null){
 			layout = (LinearLayout)LayoutInflater.from(context).inflate(resourceId, null);
@@ -63,7 +61,7 @@ public class PhoneNumberAdapter extends BaseAdapter{
 			holder.PhoneNumber.setTag(position);
 			holder.PhoneNumber.setOnTouchListener(new OnTouchListener() {
 				
-				@Override
+
 				public boolean onTouch(View v, MotionEvent event) {
 					if(event.getAction() == MotionEvent.ACTION_UP){
 						index = (Integer)v.getTag();
@@ -102,19 +100,19 @@ public class PhoneNumberAdapter extends BaseAdapter{
 		public MyTextWatcher(ButtonViewHolder holder){
 			this.mholder = holder;
 		}
-		@Override
+
 		public void beforeTextChanged(CharSequence s, int start, int count,
 				int after) {
 			
 		}
 
-		@Override
+
 		public void onTextChanged(CharSequence s, int start, int before,
 				int count) {
 						
 		}
 
-		@Override
+
 		public void afterTextChanged(Editable s) {
 			if(s != null && !"".equals(s.toString())){
 				int position = (Integer)mholder.PhoneNumber.getTag();
@@ -130,7 +128,7 @@ public class PhoneNumberAdapter extends BaseAdapter{
 		public msgButtonListener(int pos, Context con) {
 			context = con;
 		}
-		@Override
+
 		public void onClick(View v) {
 			int vid = v.getId();
 			if(vid == holder.addNext.getId()){
@@ -146,7 +144,7 @@ public class PhoneNumberAdapter extends BaseAdapter{
 		public mySpinnerListener(ButtonViewHolder holder){
 			this.mholder = holder;
 		}
-		@Override
+
 		public void onItemSelected(AdapterView<?> parent, View view,
 				int position, long id) {
 			int pos = (Integer)mholder.PhoneNumber.getTag();
@@ -154,19 +152,19 @@ public class PhoneNumberAdapter extends BaseAdapter{
 			
 		}
 
-		@Override
+
 		public void onNothingSelected(AdapterView<?> parent) {
 	
 		}
 		
 	}
 	
-	@Override
+
 	public int getCount() {
 		return mObjects.size();
 	}
 
-	@Override
+
 	public PhoneNumber getItem(int position) {
 		return mObjects.get(position);	
 	}
@@ -174,7 +172,7 @@ public class PhoneNumberAdapter extends BaseAdapter{
 	public List<PhoneNumber> getAllItem(){
 		return mObjects;
 	}
-	@Override
+
 	public long getItemId(int position) {
 		return position;
 	}
