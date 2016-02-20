@@ -22,3 +22,8 @@ with `Mc liu`,`Sl jia`, `GG`
 
 ## 效果图
 
+![主界面预览](http://7xlkqd.com1.z0.glb.clouddn.com/contactsdevice-2016-02-20-105304.png)
+
+
+----------
+![添加联系人](http://7xlkqd.com1.z0.glb.clouddn.com/contactsdevice-2016-02-20-105323.png)
