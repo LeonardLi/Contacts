@@ -18,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 import com.xiaodevil.contacts.R;
-
 import com.xiaodevil.models.User;
 import com.xiaodevil.views.SettingsActivity;
 
